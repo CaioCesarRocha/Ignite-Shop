@@ -1,12 +1,17 @@
 import { GetServerSideProps, GetStaticProps } from "next";
 import Image from "next/image";
+import Head from "next/head";
 
 import { useKeenSlider }from 'keen-slider/react';
 import "keen-slider/keen-slider.min.css";
 import { stripe } from "../lib/stripe";
 import Stripe from 'stripe';
 
-import { HomeContainer, Product } from "../styles/pages/home";
+import { 
+  HomeContainer, 
+  HomeMobileContainer,
+  Product 
+} from "../styles/pages/home";
 
 
 interface HomeProps{
@@ -28,23 +33,44 @@ export default function Home({products}: HomeProps) {
     }
   });
 
-  return (   
-    <HomeContainer ref={sliderRef} className="keen-slider">
-      {products.map(product =>(
-        <Product 
-          key={product.id}
-          href={`/product/${product.id}`}
-          className="keen-slider__slide"
-          prefetch={false}
-        >
-          <Image src={product.imageUrl} width={520} height={480} alt=""/>
-          <footer>
-            <strong>{product.name}</strong>
-            <span>{product.price}</span>
-          </footer>
-        </Product>
-      ))} 
-    </HomeContainer>
+  return (  
+    <>
+      <Head>
+        <title>HOME | Ignite Shop</title>
+      </Head>  
+      <HomeContainer ref={sliderRef} className="keen-slider">    
+        {products.map(product =>(
+          <Product 
+            key={product.id}
+            href={`/product/${product.id}`}
+            className="keen-slider__slide"
+            prefetch={false}
+          >
+            <Image src={product.imageUrl} width={520} height={480} alt=""/>
+            <footer>
+              <strong>{product.name}</strong>
+              <span>{product.price}</span>
+            </footer>
+          </Product>
+        ))} 
+      </HomeContainer>
+      <HomeMobileContainer>    
+        {products.map(product =>(
+          <Product 
+            key={product.id}
+            href={`/product/${product.id}`}
+            className="keen-slider__slide"
+            prefetch={false}
+          >
+            <Image src={product.imageUrl} width={520} height={480} alt=""/>
+            <footer>
+              <strong>{product.name}</strong>
+              <span>{product.price}</span>
+            </footer>
+          </Product>
+        ))} 
+      </HomeMobileContainer>
+    </>
   )
 }
 
