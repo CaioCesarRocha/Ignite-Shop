@@ -2,7 +2,7 @@
 
 🥅 - Today I work as a Full Stack(JS) developer!
 
-📈 - I'm studying and working with technologies like React, Node, Typescript and others.
+📈 - I'm studying and working with technologies like React, Node, Typescript and the like.
 
 <div align="center">
   <a href="https://github.com/CaioCesarRocha">
