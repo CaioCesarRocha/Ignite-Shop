@@ -1,20 +1,25 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+
 import { stripe } from "../../lib/stripe";
 import Stripe from "stripe";
+import axios from "axios";
+
 import { 
   ImageContainer, 
   ImageProduct, 
   ProductContainer, 
   ProductDetails 
 } from "../../styles/pages/product";
-import Image from "next/image";
-import axios from "axios";
-import { useState } from "react";
 
-interface ProductProps{
-  product:{
+import { addShoppingCart, removeShoppingCart} from '../../redux/reducers/shoppingCartReducer';
+
+
+type Product ={
     id: string,
     name: string,
     imageUrl: string,
@@ -22,11 +27,15 @@ interface ProductProps{
     price: string,
     description: string,
     defaultPriceId: string
-  }
+}
+
+interface ProductProps{
+  product: Product
 }
 
 export default function Product({product}: ProductProps) {
   const [ isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false);
+  const dispatchShoppingCart = useDispatch();
   const {isFallback} = useRouter();
 
   if(isFallback){
@@ -34,8 +43,16 @@ export default function Product({product}: ProductProps) {
    
   }
 
-  async function handleBuyProduct(){
+  async function handleAddProductChart(product: Product){
+    const newProduct = [product]
     try{
+      dispatchShoppingCart(addShoppingCart(newProduct))
+      alert(`Produto ${product.name} adicionado ao carrinho!`)
+    }catch(err){
+      alert(`${err}`)
+    }
+    
+    /*try{
       setIsCreatingCheckoutSession(true);
       const response = await axios.post('/api/checkout',{
         priceId: product.defaultPriceId
@@ -46,7 +63,7 @@ export default function Product({product}: ProductProps) {
       setIsCreatingCheckoutSession(false);
       //o ideal seria conectar com alguam ferramenta pra checar o erro (ex: Datadog, Sentry)
       alert('Falha ao redirecionar ao checkout')
-    }
+    }*/
   }
 
   return (
@@ -62,8 +79,8 @@ export default function Product({product}: ProductProps) {
           <h1>{product.name}</h1>
           <span>{product.price}</span>
           <p>{product.description}</p>
-          <button disabled={isCreatingCheckoutSession} onClick={handleBuyProduct}>
-            Comprar agora
+          <button disabled={isCreatingCheckoutSession} onClick={() => handleAddProductChart(product)}>
+            Adicionar ao carrinho
           </button>
         </ProductDetails>
       </ProductContainer>
