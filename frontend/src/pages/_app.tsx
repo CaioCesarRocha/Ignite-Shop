@@ -5,8 +5,7 @@ import {store} from '../redux/store';
 
 import { globalStyles } from '../styles/global';
 import { Container} from '../styles/pages/app';
-import { Header } from '../components/header';
-
+import { GlobalContentApp } from './_globalContent';
 
 globalStyles();
 
@@ -15,8 +14,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Container>
       <Provider store={store}>
-        <Header/>
-        <Component {...pageProps} />
+        <GlobalContentApp/>
+        <Component {...pageProps} />       
       </Provider>
     </Container>
   )

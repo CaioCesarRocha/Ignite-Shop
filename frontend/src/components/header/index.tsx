@@ -13,7 +13,7 @@ import {
     ShoppingCartCountContainer
 } from './styles';
 import { useAppSelector } from '../../redux/hooks/useAppSelector';
-import { updatingFromLocalStorageShoppingCart } from '../../redux/reducers/shoppingCartReducer';
+import { shouldRender, updatingFromLocalStorageShoppingCart } from '../../redux/reducers/shoppingCartReducer';
 
 
 export function Header(){
@@ -22,7 +22,6 @@ export function Header(){
     const shoppingCart = useAppSelector(state => state.shoppingCart)
 
     useEffect(() =>{
-        console.log('PASSEI NO HEADER')
         if(typeof window !== 'undefined') {
             const storedStateJSON = localStorage.getItem(
             '@ignite-shop:shopping-cart-state-1.0.0',
@@ -36,25 +35,28 @@ export function Header(){
     },[])
 
     useEffect(() =>{
-        console.log('shjpppinfgi carit', shoppingCart)
         setNumberProducts(shoppingCart.count)
     }, [shoppingCart.count])
 
-    return(
+    function handleRenderShoppingCart(){
+        dispatchShoppingCart(shouldRender(true))
+    }
+
+    return(       
         <HeaderContainer>
-          <Link href={'http://localhost:3000/'}>
-            <Image src={logoImg} alt=""/>
-          </Link>
-          <ShoppingCartContainer>
-                <IconCartContainer>
-                    <Handbag size={48}/>
-                </IconCartContainer>
-                <ShoppingCartCountContainer>       
-                    <ShoppingCartCount>
-                        {numberProducts}
-                    </ShoppingCartCount>
-                </ShoppingCartCountContainer> 
-          </ShoppingCartContainer>
-        </HeaderContainer>
+            <Link href={'http://localhost:3000/'}>
+                <Image src={logoImg} alt=""/>
+            </Link>
+            <ShoppingCartContainer>
+                    <IconCartContainer onClick={handleRenderShoppingCart}>
+                        <Handbag size={48}/>
+                    </IconCartContainer>
+                    <ShoppingCartCountContainer>       
+                        <ShoppingCartCount>
+                            {numberProducts}
+                        </ShoppingCartCount>
+                    </ShoppingCartCountContainer> 
+            </ShoppingCartContainer>
+        </HeaderContainer>    
     )
 }

@@ -17,10 +17,18 @@ export const ShoppingCartContainer = styled('div', {
     
 })
 
-export const IconCartContainer = styled('div', {
+export const IconCartContainer = styled('button', {
     padding: 12,
     backgroundColor: '$gray800',
-    borderRadius: 6
+    borderWidth: 0,
+    borderRadius: 6,
+    color: "$white",
+    cursor: "pointer",
+
+    '&:hover':{
+        backgroundColor: '$green500'
+    },
+
 })
 
 export const ShoppingCartCountContainer = styled('div', {

@@ -12,15 +12,22 @@ export type Product = {
 
 export type ShoppingCartState = {
     count: number,
+    shouldRender: boolean,
     listProducts: Product[]
 }
 
 export type ActionType = {
-    payload: Product[]
+    payload: Product[],
+    updateRender?: boolean
+}
+
+export type ActionTypeShouldRender = {
+    payload: boolean
 }
 
 export const shoppingCartInitialState: ShoppingCartState = {
     count: 0, 
+    shouldRender: false,
     listProducts: []
 };
 
@@ -29,6 +36,7 @@ const Slice = createSlice({
     name: 'ShoppingCart',
     initialState: {
         count: 0, 
+        shouldRender: false,
         listProducts: []
     } as ShoppingCartState,
     reducers:{
@@ -63,6 +71,13 @@ const Slice = createSlice({
             newState.listProducts = products
 
             return newState
+        },
+        shouldRender: (state: ShoppingCartState, action: ActionTypeShouldRender) =>{
+            const newState = {...state}
+
+            newState.shouldRender = action.payload
+
+            return newState
         }
     }
 })
@@ -70,7 +85,8 @@ const Slice = createSlice({
 export const {
     addShoppingCart,
     removeShoppingCart,
-    updatingFromLocalStorageShoppingCart
+    updatingFromLocalStorageShoppingCart,
+    shouldRender
 } = Slice.actions
 
 export default Slice.reducer;

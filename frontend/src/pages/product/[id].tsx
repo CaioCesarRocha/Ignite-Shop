@@ -40,7 +40,6 @@ export default function Product({product}: ProductProps) {
 
   if(isFallback){
     return <p> Loading...</p>
-   
   }
 
   async function handleAddProductChart(product: Product){

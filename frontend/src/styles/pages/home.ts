@@ -23,7 +23,6 @@ export const HomeMobileContainer = styled('main',{
     maxWidth: 'calc(100vw  - ((100vw - 1180px)/2))',
     marginLeft: 'auto',
     padding: '0 1rem 2rem 1rem',
-
     
     '@sm': {
         display: 'none',
