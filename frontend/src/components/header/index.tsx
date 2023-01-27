@@ -4,7 +4,7 @@ import { Handbag} from 'phosphor-react';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import logoImg from '../../assets/logo.svg';
+import logo from '../../assets/logo.svg';
 import { 
     HeaderContainer, 
     ShoppingCartContainer,
@@ -45,7 +45,7 @@ export function Header(){
     return(       
         <HeaderContainer>
             <Link href={'http://localhost:3000/'}>
-                <Image src={logoImg} alt=""/>
+                <Image src={logo} alt=""/>
             </Link>
             <ShoppingCartContainer>
                     <IconCartContainer onClick={handleRenderShoppingCart}>
